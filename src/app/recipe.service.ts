@@ -19,10 +19,13 @@ export class RecipeService {
   }
 
   public updateRecipe(recipe: Recipe): Observable<Recipe> {
-    return this.http.put<Recipe>(`${this.apiServerUrl}/recipes/${recipe.id}`, recipe);
+    return this.http.put<Recipe>(`${this.apiServerUrl}/recipes/update`, recipe);
   }
 
   public deleteRecipe(recipeId: number): Observable<void> {
-    return this.http.delete<void>(`${this.apiServerUrl}/recipes/delete/${recipeId}`);
+    const requestOptions: Object = {
+      responseType: 'text'
+    }
+    return this.http.delete<void>(`${this.apiServerUrl}/recipes/delete/${recipeId}`,requestOptions);
   }
 }

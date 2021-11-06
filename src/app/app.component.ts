@@ -11,11 +11,13 @@ import {NgForm} from "@angular/forms";
 })
 export class AppComponent implements OnInit{
   title = 'FoodbookSpringAngular';
-  public recipes: Recipe[] | undefined;
-  public editRecipe: Recipe | undefined;
-  public deleteRecipe: Recipe | undefined;
+  public recipes: Recipe[];
+  public editRecipe: Recipe;
+  public deleteRecipe: Recipe;
 
-  constructor(private recipeService: RecipeService) {}
+  constructor(private recipeService: RecipeService) {
+    this.recipes = [];
+  }
 
   ngOnInit() {
     this.getRecipes();
@@ -43,9 +45,11 @@ export class AppComponent implements OnInit{
       button.setAttribute('data-target', '#addRecipeModal');
     }
     if(mode === 'edit') {
+      this.editRecipe = recipe;
       button.setAttribute('data-target', '#updateRecipeModal');
     }
     if(mode === 'delete') {
+      this.deleteRecipe = recipe;
       button.setAttribute('data-target', '#deleteRecipeModal');
     }
 
