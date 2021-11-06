@@ -99,8 +99,8 @@ export class AppComponent implements OnInit{
     for (const recipe of this.recipes) {
       if (recipe.name.toLowerCase().indexOf(key.toLowerCase()) !== -1
         || recipe.name.toLowerCase().indexOf(key.toLowerCase()) !== -1
-        || recipe.description.toLowerCase().indexOf(key.toLowerCase()) !== -1
-        || recipe.descriptionSummary.toLowerCase().indexOf(key.toLowerCase()) !== -1) {
+        || recipe.descriptionLong.toLowerCase().indexOf(key.toLowerCase()) !== -1
+        || recipe.descriptionShort.toLowerCase().indexOf(key.toLowerCase()) !== -1) {
         results.push(recipe);
       }
     }

@@ -17,21 +17,23 @@
 </nav>
 <div class="container" id="main-container">
   <div class="row">
-    <div *ngFor="let recipe of recipes" class="col-md-6 col-xl-30">
+    <div *ngFor="let recipe of recipes" class="col-md-6 col-xl-5">
       <div class="card m-b-10">
         <div class="card-body row">
-          <div class="col-3">
-            <a href=""><img src="https://assets.bonappetit.com/photos/60a4022a248102a01bcfa0b6/1:1/w_1920,c_limit/0621-Sheet-Pan-Gnocchi.jpg" alt="" class="img-fluid rounded-circle w-60"></a>
+          <div class="col-4">
+            <a href=""><img src="{{recipe.pictureMain}}" alt="" class="img-fluid rounded-circle w-60"></a>
             <a href=""><img src="{{recipe?.name}}" alt="" class="img-fluid rounded-circle w-60"></a>
           </div>
           <div class="col-6 card-title align-self-center mb-0">
             <h5>{{recipe?.name}}</h5>
-            <p class="m-0">{{recipe?.description}}</p>
+            <p class="m-0">{{recipe?.descriptionLong}}</p>
           </div>
         </div>
         <ul class="list-group list-group-flush">
-          <li class="list-group-item"><i class="fa fa-envelope float-right"></i>Stars: {{recipe?.stars}}</li>
-          <li class="list-group-item"><i class="fa fa-phone float-right"></i>Phone: {{recipe?.servings}}</li>
+          <li class="list-group-item"><i class="fa fa-envelope float-right"></i>Difficulty: {{recipe?.difficulty}}/5</li>
+          <li class="list-group-item"><i class="fa fa-envelope float-right"></i>Category: {{recipe?.category}}</li>
+          <li class="list-group-item"><i class="fa fa-phone float-right"></i>Servings: {{recipe?.servings}}</li>
+          <li class="list-group-item"><i class="fa fa-phone float-right"></i>Author: {{recipe?.author}}</li>
         </ul>
         <div class="card-body">
           <div class="float-right btn-group btn-group-sm">
@@ -44,46 +46,58 @@
   </div>
 
   <!-- Add Recipe Modal -->
-<!--  <div class="modal fade" id="addRecipeModal" tabindex="-1" role="dialog" aria-labelledby="addRecipeModalLabel" aria-hidden="true">-->
-<!--    <div class="modal-dialog" role="document">-->
-<!--      <div class="modal-content">-->
-<!--        <div class="modal-header">-->
-<!--          <h5 class="modal-title" id="addRecipeModalLabel">Add Recipe</h5>-->
-<!--          <button type="button" class="close" data-dismiss="modal" aria-label="Close">-->
-<!--            <span aria-hidden="true">&times;</span>-->
-<!--          </button>-->
-<!--        </div>-->
-<!--        <div class="modal-body">-->
-<!--          <form #addForm="ngForm" (ngSubmit)="onAddRecipe(addForm)">-->
-<!--            <div class="form-group">-->
-<!--              <label for="name">Name</label>-->
-<!--              <input type="text" ngModel name="name" class="form-control" id="name" placeholder="Name" required>-->
-<!--            </div>-->
-<!--            <div class="form-group">-->
-<!--              <label for="email">Email Address</label>-->
-<!--              <input type="email" ngModel name="email" class="form-control" id="email" placeholder="Email" required>-->
-<!--            </div>-->
-<!--            <div class="form-group">-->
-<!--              <label for="phone">Job title</label>-->
-<!--              <input type="text" ngModel name="jobTitle" class="form-control" id="jobTile" placeholder="Job title" required>-->
-<!--            </div>-->
-<!--            <div class="form-group">-->
-<!--              <label for="phone">Phone</label>-->
-<!--              <input type="text" ngModel name="phone" class="form-control" id="phone" placeholder="Phone" required>-->
-<!--            </div>-->
-<!--            <div class="form-group">-->
-<!--              <label for="phone">Image URL</label>-->
-<!--              <input type="text" ngModel name="imageUrl" class="form-control" id="imageUrl" placeholder="Image URL" required>-->
-<!--            </div>-->
-<!--            <div class="modal-footer">-->
-<!--              <button type="button" id="add-recipe-form" class="btn btn-secondary" data-dismiss="modal">Close</button>-->
-<!--              <button [disabled]="addForm.invalid" type="submit" class="btn btn-primary" >Save changes</button>-->
-<!--            </div>-->
-<!--          </form>-->
-<!--        </div>-->
-<!--      </div>-->
-<!--    </div>-->
-<!--  </div>-->
+  <div class="modal fade" id="addRecipeModal" tabindex="-1" role="dialog" aria-labelledby="addRecipeModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="addRecipeModalLabel">Add Recipe</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form #addForm="ngForm" (ngSubmit)="onAddRecipe(addForm)">
+            <div class="form-group">
+              <label for="name"><b>Name</b></label>
+              <input type="text" ngModel name="name" class="form-control" id="name" placeholder="Name" required>
+            </div>
+            <div class="form-group">
+              <label for="author"><b>Author</b></label>
+              <input type="text" ngModel name="author" class="form-control" id="author" placeholder="Author" required>
+            </div>
+            <div class="form-group">
+              <label for="descriptionShort"><b>Description short</b></label>
+              <input type="text" ngModel name="descriptionShort" class="form-control" id="descriptionShort" placeholder="Description short" required>
+            </div>
+            <div class="form-group">
+              <label for="descriptionLong"><b>Description long</b></label>
+              <input type="text" ngModel name="descriptionLong" class="form-control" id="descriptionLong" placeholder="Description long" required>
+            </div>
+            <div class="form-group">
+              <label for="imageLink"><b>Image URL</b></label>
+              <input type="text" ngModel name="imageUrl" class="form-control" id="imageLink" placeholder="Image URL" required>
+            </div>
+            <div class="form-group">
+              <label for="category"><b>Category</b></label>
+              <input type="text" ngModel name="category" class="form-control" id="category" placeholder="Category" required>
+            </div>
+            <div class="form-group">
+              <label for="difficulty"><b>Difficulty</b></label>
+              <input type="text" ngModel name="difficulty" class="form-control" id="difficulty" placeholder="Difficulty" required>
+            </div>
+            <div class="form-group">
+              <label for="servings"><b>Servings</b></label>
+              <input type="text" ngModel name="servings" class="form-control" id="servings" placeholder="Servings" required>
+            </div>
+            <div class="modal-footer">
+              <button type="button" id="add-recipe-form" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              <button [disabled]="addForm.invalid" type="submit" class="btn btn-primary" >Save changes</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <!-- Edit Modal -->
 <!--  <div class="modal fade" id="updateRecipeModal" tabindex="-1" role="dialog" aria-labelledby="RecipeEditModalLabel" aria-hidden="true">-->
@@ -97,15 +111,49 @@
 <!--        </div>-->
 <!--        <div class="modal-body">-->
 <!--          <form #editForm="ngForm">-->
+
 <!--            <div class="form-group">-->
-<!--              <label for="name">Name</label>-->
-<!--              <input type="text" ngModel="{{editRecipe.name}}" name="name" class="form-control" id="editName" aria-describedby="emailHelp" placeholder="Name">-->
+<!--              <label for="editName"><b>Name</b></label>-->
+<!--              <input type="text" ngModel="{{editRecipe.name}}" name="name" class="form-control" id="editName" placeholder="Name" required>-->
 <!--            </div>-->
-<!--            <input type="hidden" ngModel="{{editRecipe.id}}" name="id" class="form-control" id="id" placeholder="Id">-->
 <!--            <div class="form-group">-->
-<!--              <label for="email">Email Address</label>-->
-<!--              <input type="email" ngModel="{{editRecipe.description}}" name="email" class="form-control" id="editDesc" placeholder="Desc">-->
+<!--              <label for="editAuthor"><b>Author</b></label>-->
+<!--              <input type="text" ngModel="{{editRecipe.author}}" name="author" class="form-control" id="editAuthor" placeholder="Author" required>-->
 <!--            </div>-->
+<!--            <div class="form-group">-->
+<!--              <label for="editDescriptionShort"><b>Description short</b></label>-->
+<!--              <input type="text" ngModel="{{editRecipe.descriptionShort}}" name="descriptionShort" class="form-control" id="editDescriptionShort" placeholder="Description short" required>-->
+<!--            </div>-->
+<!--            <div class="form-group">-->
+<!--              <label for="editDescriptionLong"><b>Description long</b></label>-->
+<!--              <input type="text" ngModel="{{editRecipe.descriptionLong}}" name="descriptionLong" class="form-control" id="editDescriptionLong" placeholder="Description long" required>-->
+<!--            </div>-->
+<!--            <div class="form-group">-->
+<!--              <label for="editImageLink"><b>Image URL</b></label>-->
+<!--              <input type="text" ngModel="{{editRecipe.pictureMain}}" name="imageUrl" class="form-control" id="editImageLink" placeholder="Image URL" required>-->
+<!--            </div>-->
+<!--            <div class="form-group">-->
+<!--              <label for="editCategory"><b>Category</b></label>-->
+<!--              <input type="text" ngModel="{{editRecipe.category}}" name="category" class="form-control" id="editCategory" placeholder="Category" required>-->
+<!--            </div>-->
+<!--            <div class="form-group">-->
+<!--              <label for="editDifficulty"><b>Difficulty</b></label>-->
+<!--              <input type="text" ngModel="{{editRecipe.difficulty}}" name="difficulty" class="form-control" id="editDifficulty" placeholder="Difficulty" required>-->
+<!--            </div>-->
+<!--            <div class="form-group">-->
+<!--              <label for="editServing"><b>Servings</b></label>-->
+<!--              <input type="text" ngModel="{{editRecipe.servings}}" name="servings" class="form-control" id="editServing" placeholder="Servings" required>-->
+<!--            </div>-->
+
+<!--&lt;!&ndash;            <div class="form-group">&ndash;&gt;-->
+<!--&lt;!&ndash;              <label for="name">Name</label>&ndash;&gt;-->
+<!--&lt;!&ndash;              <input type="text" ngModel="{{editRecipe.name}}" name="name" class="form-control" id="editName" aria-describedby="emailHelp" placeholder="Name">&ndash;&gt;-->
+<!--&lt;!&ndash;            </div>&ndash;&gt;-->
+<!--&lt;!&ndash;            <input type="hidden" ngModel="{{editRecipe.id}}" name="id" class="form-control" id="id" placeholder="Id">&ndash;&gt;-->
+<!--&lt;!&ndash;            <div class="form-group">&ndash;&gt;-->
+<!--&lt;!&ndash;              <label for="email">Email Address</label>&ndash;&gt;-->
+<!--&lt;!&ndash;              <input type="email" ngModel="{{editRecipe.description}}" name="email" class="form-control" id="editDesc" placeholder="Desc">&ndash;&gt;-->
+<!--&lt;!&ndash;            </div>&ndash;&gt;-->
 <!--            <div class="modal-footer">-->
 <!--              <button type="button" id="" data-dismiss="modal" class="btn btn-secondary">Close</button>-->
 <!--              <button (click)="onUpdateRecipe(editForm.value)" data-dismiss="modal" class="btn btn-primary" >Save changes</button>-->
