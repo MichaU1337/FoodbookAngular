@@ -3,6 +3,7 @@ import {Recipe} from "./recipe";
 import {RecipeService} from "./recipe.service";
 import {HttpErrorResponse} from "@angular/common/http";
 import {NgForm} from "@angular/forms";
+import {RecipeListService} from "./recipeList.service";
 
 @Component({
   selector: 'app-root',
@@ -10,17 +11,31 @@ import {NgForm} from "@angular/forms";
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit{
-  title = 'FoodbookSpringAngular';
+  title = 'Foodbook';
   public recipes: Recipe[];
+  public savedRecipes: Recipe[];
   public editRecipe: Recipe;
   public deleteRecipe: Recipe;
 
-  constructor(private recipeService: RecipeService) {
+  constructor(private recipeService: RecipeService, private recipeListService: RecipeListService) {
+    this.savedRecipes = [];
     this.recipes = [];
   }
 
   ngOnInit() {
     this.getRecipes();
+  }
+
+  public getSavedRecipes(): void {
+    this.recipeListService.getSavedRecipes().subscribe(
+      (response: Recipe[]) => {
+        this.savedRecipes = response;
+        console.log(this.savedRecipes);
+      },
+      (error: HttpErrorResponse) => {
+        alert(error.message);
+      }
+    );
   }
 
   public getRecipes(): void {
@@ -101,10 +116,7 @@ export class AppComponent implements OnInit{
     const results: Recipe[] = [];
 
     for (const recipe of this.recipes) {
-      if (recipe.name.toLowerCase().indexOf(key.toLowerCase()) !== -1
-        || recipe.name.toLowerCase().indexOf(key.toLowerCase()) !== -1
-        || recipe.descriptionLong.toLowerCase().indexOf(key.toLowerCase()) !== -1
-        || recipe.descriptionShort.toLowerCase().indexOf(key.toLowerCase()) !== -1) {
+      if (recipe.name.toLowerCase().indexOf(key.toLowerCase()) !== -1) {
         results.push(recipe);
       }
     }
